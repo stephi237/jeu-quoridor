@@ -1,11 +1,18 @@
 import argparse
-
+import json
 
 def analyser_commande():
-    parser = argparse.ArgumentParser(description =
-    "Permettre l'enregistrement de nouveau joueur et donne l'etat du jeu")
-    parser.add_argument( 'idul', type = int, help = 'Idul du joueur')
-    
-   
+    # analyseur de ligne de commande
+    parser = argparse.ArgumentParser(description = 'Jeu Quoridor - phase 1')
+    parser.add_argument('idul', help = 'IDUL du joueur.', type = int )
+    parser.add_argument('-l', '--lister', metavar = '', help = 
+                    'Lister les identifiants de vos 20 dernières parties.')
     return parser.parse_args()
+
+
+
+
+    
+
+
     
