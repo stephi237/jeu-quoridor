@@ -2,11 +2,12 @@ import argparse
 import requests
 import json
 
+#--------------------------------------Fonctions du module main -----------------------------------------------
 
 def analyser_commande():
     # analyseur de ligne de commande
     parser = argparse.ArgumentParser(description = 'Jeu Quoridor - phase 1')
-    parser.add_argument('idul', help = 'IDUL du joueur.', type = int )
+    parser.add_argument('idul', help = 'IDUL du joueur.', type = str )
     parser.add_argument('-l', '--lister', metavar = '', help = 
                     'Lister les identifiants de vos 20 dernières parties.')
     return parser.parse_args()
@@ -100,8 +101,10 @@ def afficher_matrice(matrice):
     return'\n'.join(matrice) 
 
 
+#-----------------------------------------Fonctions du module api-------------------------------------------------
+
 def decoder_json_get(texte):
-    # convertit les informations renvoyés par le serveur
+    # convertit les informations renvoyés par le serveur lors de l'appel de la fonction get
     if(type(texte) == str):
         data = json.loads(texte)
     else:
@@ -113,8 +116,22 @@ def decoder_json_get(texte):
     
     return info 
 
+def decoder_json_post(texte):
+    # convertit les informations renvoyés par le serveur lors de l'appel de la fonction post
+    if(type(texte) == str):
+        data = json.loads(texte)
+    else:
+        data = texte
+    info = []
+    info.append(data["id"])
+    info.append(data["état"])   
+    if "message" in data:
+        info.append(data["message"])
+    return info 
+
 
 def lister_parties(idul):
+    #liste les 20 dernières parties du joueur 
     url_base = 'https://python.gel.ulaval.ca/quoridor/api/'
     rep = requests.get(url_base+'lister/' , params={'idul': str(idul)})
     if rep.status_code == 200:
@@ -128,8 +145,18 @@ def lister_parties(idul):
     else:
         print(f"Le GET sur {url_base+'lister'} a produit le code d'erreur {rep.status_code}.")
         raise RuntimeError
-    
 
+def débuter_partie(idul):
+    #renvoit les informations d'un début de partie 
+    url_base = 'https://python.gel.ulaval.ca/quoridor/api/'
+    rep = requests.post(url_base+'débuter/', data={'idul': str(idul)})
+    reponse = rep.json()
+    info = decoder_json_post(reponse)
+    if (len(info)==3):
+        return(info[0], info[1])
+    else:
+        print(info[2])
+        raise RuntimeError
 
 
 
