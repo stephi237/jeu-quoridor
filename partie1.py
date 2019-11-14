@@ -1,5 +1,7 @@
 import argparse
+import requests
 import json
+
 
 def analyser_commande():
     # analyseur de ligne de commande
@@ -11,7 +13,10 @@ def analyser_commande():
 
 def dechiffrage_du_json(etat_du_jeu):
     # convertit le langage json en objet utilisable
-    data = json.loads(etat_du_jeu)
+    if(type(etat_du_jeu) == str):
+        data = json.loads(etat_du_jeu)
+    else:
+        data = etat_du_jeu
     joueurs = data["joueurs"]
     j1 = joueurs[0]["pos"]
     j2 = joueurs[1]["pos"]
@@ -95,6 +100,34 @@ def afficher_matrice(matrice):
     return'\n'.join(matrice) 
 
 
+def decoder_json_get(texte):
+    # convertit les informations renvoyés par le serveur
+    if(type(texte) == str):
+        data = json.loads(texte)
+    else:
+        data = texte
+    
+    info = data["parties"]
+    if "message" in data:
+        info.append(data["message"])
+    
+    return info 
+
+
+def lister_parties(idul):
+    url_base = 'https://python.gel.ulaval.ca/quoridor/api/'
+    rep = requests.get(url_base+'lister/' , params={'idul': str(idul)})
+    if rep.status_code == 200:
+        rep = rep.json()
+        info = decoder_json_get(rep)
+        if(info != []):
+            parties = info[0]
+            return parties
+        else:
+            return info
+    else:
+        print(f"Le GET sur {url_base+'lister'} a produit le code d'erreur {rep.status_code}.")
+        raise RuntimeError
     
 
 
