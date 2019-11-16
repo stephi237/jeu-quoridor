@@ -1,6 +1,8 @@
 import api
 import argparse
 
+# Fonctions du module main
+
 def analyser_commande():
     # analyseur de ligne de commande
     parser = argparse.ArgumentParser(description = 'Jeu Quoridor - phase 1')
@@ -14,7 +16,9 @@ def afficher_damier_ascii(etat_du_jeu):
     matrice = api.afficher_matrice(matrice)
     print(matrice)
 
+
 # lancement d'une partie
+
 args = analyser_commande()
 if args.lister == True:
     print(api.lister_parties(args))
@@ -24,7 +28,7 @@ while start == True :
     afficher_damier_ascii(etat)
     print('\t Entre le type de coup que tu veux effectuer -- :')
     print("\t 'D' pour déplacer le jeton \n\t 'MH' pour placer un mur horizontal \n\t ou 'MV' pour placer un mur vertical ")
-    type_coup = input()
+    type_coup = input('\t')
     position = []
     print('Entre la position (x, y) correspondante')
     position.append(input ('Entre la position x correspondante'))

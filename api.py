@@ -44,7 +44,7 @@ def jouer_coup(id_partie, type_coup ,position):
     return rep['état']
 
 
-#----------------------------------------- Fonctions auxilliaires pour afficher le damier -------------------------------------------------
+#----------------------------------------- Autres Fonctions pour afficher le damier -------------------------------------------------
 
 def dechiffrage_du_json(etat_du_jeu):
     # convertit le langage json en objet utilisable
