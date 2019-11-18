@@ -29,7 +29,9 @@ while start == 0:
     correct = 0
     while (correct == 0):
         print('\t Entre le type de coup que tu veux effectuer -- :')
-        print("\t 'D' pour déplacer le jeton \n\t 'MH' pour placer un mur horizontal \n\t ou 'MV' pour placer un mur vertical ")            
+        print("\t 'D' pour déplacer le jeton \n"
+              "\t 'MH' pour placer un mur horizontal \n"
+              "\t ou 'MV' pour placer un mur vertical ")            
         type_coup = input('\t')        
         position = []
         print('Entre la position (x, y) correspondante')        
@@ -47,6 +49,6 @@ while start == 0:
             correct = 0
         else :
             correct = 1
-    
+
    
 

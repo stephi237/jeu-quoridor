@@ -39,9 +39,7 @@ def jouer_coup(id_partie, type_coup ,position):
         print(rep["gagnant"])
         raise StopIteration
     elif 'message' in rep:
-        print('le serveur répond')
         print(rep['message'])
-        print('juste ca')
         raise RuntimeError
     return rep['état']
 
