@@ -3,11 +3,13 @@ import argparse
 
 # Fonctions du module main
 
+
 def analyser_commande():
     # analyseur de ligne de commande
-    parser = argparse.ArgumentParser(description = 'Jeu Quoridor - phase 1')
-    parser.add_argument('idul', help= 'IDUL du joueur.', type= str )
-    parser.add_argument('-l', '--lister',action='store_true' , help= 'Lister les identifiants de vos 20 dernières parties.')
+    parser = argparse.ArgumentParser(description='Jeu Quoridor - phase 1')
+    parser.add_argument('idul', help='IDUL du joueur.', type=str)
+    parser.add_argument('-l', '--lister', action='store_true',
+                        help='Lister les identifiants de vos 20 dernières parties.')
     return parser.parse_args()
 
 
@@ -22,7 +24,7 @@ def afficher_damier_ascii(etat_du_jeu):
 args = analyser_commande()
 if args.lister == True:
     print(api.lister_parties(args))
-(identifiant , etat) = api.débuter_partie(args)
+(identifiant, etat) = api.débuter_partie(args)
 start = 0
 afficher_damier_ascii(etat)
 while start == 0:
@@ -31,24 +33,21 @@ while start == 0:
         print('\t Entre le type de coup que tu veux effectuer -- :')
         print("\t 'D' pour déplacer le jeton \n"
               "\t 'MH' pour placer un mur horizontal \n"
-              "\t ou 'MV' pour placer un mur vertical ")            
-        type_coup = input('\t')        
+              "\t ou 'MV' pour placer un mur vertical ")
+        type_coup = input('\t')
         position = []
-        print('Entre la position (x, y) correspondante')        
-        position.append(input ('Entre la position x correspondante'))
-        position.append(input ('Entre la position y correspondante'))
+        print('Entre la position (x, y) correspondante')
+        position.append(input('Entre la position x correspondante'))
+        position.append(input('Entre la position y correspondante'))
         try:
-            etat = api.jouer_coup(identifiant, type_coup ,position)
-            afficher_damier_ascii(etat) 
+            etat = api.jouer_coup(identifiant, type_coup, position)
+            afficher_damier_ascii(etat)
         except StopIteration:
             print("C'est le gagnant !!!!! :) ")
             start = correct = 1
         except RuntimeError:
             correct = 0
-        except :
+        except:
             correct = 0
-        else :
+        else:
             correct = 1
-
-   
-
