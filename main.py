@@ -23,16 +23,30 @@ args = analyser_commande()
 if args.lister == True:
     print(api.lister_parties(args))
 (identifiant , etat) = api.débuter_partie(args)
-start = True
-while start == True :
-    afficher_damier_ascii(etat)
-    print('\t Entre le type de coup que tu veux effectuer -- :')
-    print("\t 'D' pour déplacer le jeton \n\t 'MH' pour placer un mur horizontal \n\t ou 'MV' pour placer un mur vertical ")
-    type_coup = input('\t')
-    position = []
-    print('Entre la position (x, y) correspondante')
-    position.append(input ('Entre la position x correspondante'))
-    position.append(input ('Entre la position y correspondante'))
-    etat = api.jouer_coup(identifiant, type_coup ,position)
+start = 0
+afficher_damier_ascii(etat)
+while start == 0:
+    correct = 0
+    while (correct == 0):
+        print('\t Entre le type de coup que tu veux effectuer -- :')
+        print("\t 'D' pour déplacer le jeton \n\t 'MH' pour placer un mur horizontal \n\t ou 'MV' pour placer un mur vertical ")            
+        type_coup = input('\t')        
+        position = []
+        print('Entre la position (x, y) correspondante')        
+        position.append(input ('Entre la position x correspondante'))
+        position.append(input ('Entre la position y correspondante'))
+        try:
+            etat = api.jouer_coup(identifiant, type_coup ,position)
+            afficher_damier_ascii(etat) 
+        except StopIteration:
+            print("C'est le gagnant !!!!! :) ")
+            start = correct = 1
+        except RuntimeError:
+            correct = 0
+        except :
+            correct = 0
+        else :
+            correct = 1
+    
    
 
